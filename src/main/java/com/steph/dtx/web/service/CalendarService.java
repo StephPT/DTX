@@ -21,13 +21,10 @@ public class CalendarService {
     @Autowired
     private TimesheetService timesheetService;
 
-    @Autowired
-    private UserRepository userRepository;
-
     public String holidays() {
         StringBuilder stringBuilder = new StringBuilder();
         String format = "{ title: 'Holiday', start: '%s', end: '%s' },";
-        holidayService.getUpcomingHolidays(userRepository.findUserByUsername("stomkins")).forEach(holidays -> {
+        holidayService.getUpcomingHolidays().forEach(holidays -> {
             stringBuilder.append(String.format(format, DateUtility.DATE_FORMAT.format(holidays.getDate()), DateUtility.DATE_FORMAT.format(holidays.getDate())));
         });
         return stringBuilder.toString();

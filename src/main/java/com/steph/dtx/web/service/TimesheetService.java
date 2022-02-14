@@ -32,8 +32,10 @@ public class TimesheetService {
     @Autowired
     private EntityManager entityManager;
 
-    private BankHolidays bankHolidays;
+    @Autowired
+    private UserService userService;
 
+    private BankHolidays bankHolidays;
 
     @PostConstruct
     public void init() {
@@ -42,25 +44,25 @@ public class TimesheetService {
         bankHolidays = restTemplate.getForObject(url, BankHolidays.class);
     }
 
-    public double getTimeForMonth(User user) {
-        return getTimeBetween(convertToDate(getFirstDayOfMonth()), convertToDate(getLastDayOfMonth()), user);
+    public double getTimeForMonth() {
+        return getTimeBetween(convertToDate(getFirstDayOfMonth()), convertToDate(getLastDayOfMonth()));
     }
 
-    public List<Timesheet> getTimesheetBetween(Date startDate, Date endDate, User user) {
+    public List<Timesheet> getTimesheetBetween(Date startDate, Date endDate) {
         return entityManager
                 .createQuery("SELECT t FROM Timesheet t WHERE t.user = :user AND t.date BETWEEN :startDate AND :endDate")
                 .setParameter("startDate", startDate, TemporalType.DATE)
                 .setParameter("endDate", endDate, TemporalType.DATE)
-                .setParameter("user", user)
+                .setParameter("user", userService.getUser())
                 .getResultList();
     }
 
-    private double getTimeBetween(Date startDate, Date endDate, User user) {
+    private double getTimeBetween(Date startDate, Date endDate) {
         Double result = (double) entityManager
                 .createQuery("SELECT SUM(t.length) FROM Timesheet t WHERE t.user = :user AND t.date BETWEEN :startDate AND :endDate")
                 .setParameter("startDate", startDate, TemporalType.DATE)
                 .setParameter("endDate", endDate, TemporalType.DATE)
-                .setParameter("user", user)
+                .setParameter("user", userService.getUser())
                 .getSingleResult();
         return result == null ? 0 : result;
     }

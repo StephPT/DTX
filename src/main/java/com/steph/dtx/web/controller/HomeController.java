@@ -14,23 +14,11 @@ import javax.faces.bean.ViewScoped;
 public class HomeController {
 
     @Autowired
-    private HolidayService holidayService;
-
-    @Autowired
     private TimesheetService timesheetService;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    private User user;
-
-    public void init() {
-        user = userRepository.findUserByUsername("stomkins");
-    }
 
     public String outstandingMessage() {
         String result = "";
-        double month = timesheetService.getTimeForMonth(user);
+        double month = timesheetService.getTimeForMonth();
         double workingHours = timesheetService.calculateWorkingHours();
         if(month < workingHours) {
             result = "You have missing hours this month.";
@@ -41,19 +29,15 @@ public class HomeController {
     }
 
     public boolean isOutstandingTime() {
-        return (timesheetService.getTimeForMonth(user) != timesheetService.calculateWorkingHours());
+        return (timesheetService.getTimeForMonth() != timesheetService.calculateWorkingHours());
     }
 
     public double getTimeForMonth() {
-        return timesheetService.getTimeForMonth(user);
+        return timesheetService.getTimeForMonth();
     }
 
     public double getWorkingHours() {
         return timesheetService.calculateWorkingHours();
-    }
-
-    public User getUser() {
-        return user;
     }
 
 }

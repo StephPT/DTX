@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item active">
-                    <a class="nav-link text-white" href="/home.xhtml">Home</a>
+                    <a class="nav-link text-white" href="/index.xhtml">Home</a>
                 </li>
                 <li class="nav-itembg-white">
                     <a class="nav-link text-white" href="/time.xhtml">Book Time</a>
@@ -24,9 +24,18 @@
                     <a class="nav-link text-white" href="/holiday.xhtml">Book Holidays</a>
                 </li>
             </ul>
-            <a class="navbar-text nav-link text-white text-decoration-none" href="#" style="padding-right: 15px;">
-                <i class="fa-solid fa-user"></i> Portal
-            </a>
+            <div style="padding-right: 15px; display: inline-block;">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item active" style="padding-right: 15px;">
+                        <a class="nav-link text-white" href="#">
+                            <i class="fa-solid fa-user"></i> Portal
+                        </a>
+                    </li>
+                    <li class="nav-itembg-white">
+                        <button class="btn btn-danger" onclick="document.location = '/performLogout'">Logout</button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 </ui:composition>

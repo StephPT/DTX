@@ -12,7 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.sql.DataSource;
 
 @Configuration
@@ -28,15 +34,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("SELECT username, password, enabled FROM user WHERE username=?")
-                .authoritiesByUsernameQuery("SELECT username, role FROM user WHERE username=?");
-        super.configure(auth);
+                .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username=?")
+                .authoritiesByUsernameQuery("SELECT username, role FROM users WHERE username=?");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/javax.faces.resource/**").permitAll()
+                .antMatchers("/login.xhtml").permitAll()
+                .antMatchers("**").fullyAuthenticated()
+                .anyRequest().authenticated();
+
+        http.formLogin().loginPage("/login.xhtml").permitAll().failureUrl("/login.xhtml?error=true").defaultSuccessUrl("/");
+
+        http.logout().logoutUrl("/performLogout").invalidateHttpSession(true).deleteCookies("JSESSIONID");
+
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("**").permitAll();
+
+        http.headers().xssProtection();
     }
 
     @Bean
