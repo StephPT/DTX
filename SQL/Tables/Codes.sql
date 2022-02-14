@@ -1,0 +1,8 @@
+USE DTX;
+
+CREATE TABLE Codes (
+    uuid VARCHAR(255) UNIQUE PRIMARY KEY NOT NULL,
+    code NUMERIC UNIQUE NOT NULL,
+    projectUuid VARCHAR(255) NOT NULL,
+    FOREIGN KEY (projectUuid) REFERENCES Project(uuid)
+);

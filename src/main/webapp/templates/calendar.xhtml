@@ -1,0 +1,31 @@
+<ui:composition xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:outputScript library="webjars" name="fullcalendar/5.10.1/main.min.js"/>
+    <h:outputScript library="webjars" name="fullcalendar/5.10.1/locales-all.min.js"/>
+    <h:outputStylesheet library="webjars" name="fullcalendar/5.10.1/main.min.css"/>
+    <h:outputScript>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                themeSystem : "bootstrap",
+                events: [
+                    <h:outputText value="#{calendarService.holidays()}"/>
+                    <h:outputText value="#{calendarService.bankHolidays()}"/>
+                ],
+                    businessHours: {
+                    daysOfWeek: [ 1, 2, 3, 4, 5 ]
+                },
+                    buttonText: {
+                    today:    'Today',
+                    month:    'Month',
+                    week:     'Week',
+                    day:      'Day',
+                    list:     'List'
+                }
+            });
+            calendar.setOption('height', 650);
+            calendar.render();
+        })
+    </h:outputScript>
+</ui:composition>

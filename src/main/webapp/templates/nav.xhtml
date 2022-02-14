@@ -1,0 +1,32 @@
+<ui:composition xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:outputStylesheet>
+        a.nav-link:hover {
+            opacity: 70%;
+            transform: scale(1.05);
+            transition: 0.7s;
+        }
+    </h:outputStylesheet>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <span class="navbar-brand" href="#">
+            <h:graphicImage name="img/logo.png" style="padding-left: 15px; width: 45px"/>
+        </span>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item active">
+                    <a class="nav-link text-white" href="/home.xhtml">Home</a>
+                </li>
+                <li class="nav-itembg-white">
+                    <a class="nav-link text-white" href="/time.xhtml">Book Time</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/holiday.xhtml">Book Holidays</a>
+                </li>
+            </ul>
+            <a class="navbar-text nav-link text-white text-decoration-none" href="#" style="padding-right: 15px;">
+                <i class="fa-solid fa-user"></i> Portal
+            </a>
+        </div>
+    </nav>
+</ui:composition>

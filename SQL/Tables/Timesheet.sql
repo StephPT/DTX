@@ -1,0 +1,11 @@
+USE DTX;
+
+CREATE TABLE Timesheet (
+    uuid VARCHAR(255) NOT NULL UNIQUE PRIMARY KEY,
+    user VARCHAR(255) NOT NULL,
+    date DATE NOT NULL,
+    length DECIMAL(10,2) NOT NULL,
+    code VARCHAR(255) NOT NULL,
+    FOREIGN KEY (code) REFERENCES Codes(uuid),
+    FOREIGN KEY (user) REFERENCES users(uuid)
+)

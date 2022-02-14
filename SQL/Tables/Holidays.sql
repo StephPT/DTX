@@ -1,0 +1,8 @@
+USE DTX;
+
+CREATE TABLE Holidays (
+    uuid VARCHAR(255) PRIMARY KEY UNIQUE NOT NULL,
+    `user` VARCHAR(255) NOT NULL,
+    date DATE NOT NULL,
+    FOREIGN KEY (`user`) REFERENCES `users`(UUID)
+);
