@@ -9,9 +9,6 @@ import org.springframework.web.context.annotation.RequestScope;
 @RequestScope
 public class LoginController {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     private static final String MESSAGE = "The Username or Password entered is incorrect.";
 
     private boolean errored = false;
@@ -25,7 +22,6 @@ public class LoginController {
     }
 
     public void setErrored(boolean errored) {
-        passwordEncoder.encode("Snowman25451855!");
         this.errored = errored;
     }
 

@@ -13,6 +13,8 @@ public class RootHandlerConfiguration implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("forward:/index.xhtml");
+        registry.addViewController("/time").setViewName("forward:/time.xhtml");
+        registry.addViewController("/holiday").setViewName("forward:/holiday.xhtml");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }
